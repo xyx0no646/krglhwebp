@@ -3,9 +3,6 @@
 #include <windows.h>
 #endif
 #include "ncbind/ncbind.hpp"
-#ifndef _WIN32
-#include "istream_compat.h"
-#endif
 #include <webp/encode.h>
 #include <webp/decode.h>
 #include <memory>
