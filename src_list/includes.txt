@@ -1,0 +1,3 @@
+libwebp
+libwebp/src
+libwebp_config
