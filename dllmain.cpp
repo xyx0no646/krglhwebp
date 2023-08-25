@@ -8,6 +8,7 @@
 #include <webp/encode.h>
 #include <webp/decode.h>
 #include <memory>
+#include <cstring>
 #include "tp_stub.h"
 #ifndef TVP_COMPILING_KRKRSDL2
 #ifdef _WIN32
