@@ -2,13 +2,19 @@
 #if 0
 #include <windows.h>
 #endif
+#ifdef TVP_COMPILING_KRKRSDL2
 #include "ncbind/ncbind.hpp"
+#endif
 #include <webp/encode.h>
 #include <webp/decode.h>
 #include <memory>
 #include "tp_stub.h"
-#if 0
+#ifndef TVP_COMPILING_KRKRSDL2
+#ifdef _WIN32
 #define EXPORT(hr) extern "C" __declspec(dllexport) hr __stdcall
+#else
+#define EXPORT(hr) extern "C" __attribute__((visibility ("default"))) hr
+#endif
 #endif
 
 void TVPLoadWEBP(void* formatdata, void *callbackdata, tTVPGraphicSizeCallback sizecallback, tTVPGraphicScanLineCallback scanlinecallback, tTVPMetaInfoPushCallback metainfopushcallback, IStream *src, tjs_int keyidx, tTVPGraphicLoadMode mode)
@@ -222,17 +228,21 @@ void TVPSaveAsWebP(void* formatdata, void* callbackdata, IStream* dst, const tts
 	}
 }
 
+#ifdef TVP_COMPILING_KRKRSDL2
 static void krglhwebp_init()
 {
 	TVPRegisterGraphicLoadingHandler( ttstr(TJS_W(".webp")), &TVPLoadWEBP, &TVPLoadHeaderWEBP, &TVPSaveAsWebP, &TVPAcceptSaveAsWebP, NULL );
 }
 
 NCB_PRE_REGIST_CALLBACK(krglhwebp_init);
+#endif
 
-#if 0
+#ifndef TVP_COMPILING_KRKRSDL2
+#ifdef _WIN32
 BOOL APIENTRY DllMain( HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserved ) {
 	return TRUE;
 }
+#endif
 
 static tjs_int GlobalRefCountAtInit = 0;
 EXPORT(HRESULT) V2Link(iTVPFunctionExporter *exporter)
